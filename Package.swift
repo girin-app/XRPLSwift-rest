@@ -5,17 +5,27 @@ import PackageDescription
 
 let package = Package(
     name: "XRPLSwift-rest",
+    platforms: [
+        .iOS(.v13),
+        .macOS(.v10_15)
+    ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "XRPLSwift-rest",
             targets: ["XRPLSwift-rest"]),
+    ],
+    dependencies: [
+        .package(url: "https://github.com/Flight-School/AnyCodable.git", from: "0.6.7")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "XRPLSwift-rest"),
+            name: "XRPLSwift-rest",
+            dependencies: [
+                "AnyCodable"
+            ]
+        ),
         .testTarget(
             name: "XRPLSwift-restTests",
             dependencies: ["XRPLSwift-rest"]
