@@ -40,6 +40,7 @@ class http {
     enum APIError : Error, Equatable {
         case invalidURL
         case noData
+        case cannotParseRequest
         case httpResponseIsNil
         case ErrorResponse(code: Int?, msg: String?)
         case unknownError
