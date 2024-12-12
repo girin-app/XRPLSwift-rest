@@ -129,9 +129,15 @@ public class XrplClient {
      * @category Network
      */
     // swiftlint:disable:next identifier_name
-//    func request(_ r: AccountChannelsRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
+    func request(_ r: AccountChannelsRequest) async throws -> AccountChannelsResponse {
+        do {
+            let res: AccountChannelsResponse = try await request<AccountChannelsRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
     // swiftlint:disable:next identifier_name
     func request(_ r: AccountCurrenciesRequest) async throws -> AccountCurrenciesResponse {
         do {
@@ -141,110 +147,256 @@ public class XrplClient {
             throw err
         }
     }
+    
     // swiftlint:disable:next identifier_name
-//    func request(_ r: AccountInfoRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-//    // swiftlint:disable:next identifier_name
-//    func request(_ r: AccountLinesRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-//    // swiftlint:disable:next identifier_name
-//    func request(_ r: AccountNFTsRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-//    // swiftlint:disable:next identifier_name
-//    func request(_ r: AccountObjectsRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-//    // swiftlint:disable:next identifier_name
-//    func request(_ r: AccountOffersRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-//    // swiftlint:disable:next identifier_name
-//    func request(_ r: AccountTxRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-//    // swiftlint:disable:next identifier_name
-//    func request(_ r: BookOffersRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-//    // swiftlint:disable:next identifier_name
-//    func request(_ r: ChannelVerifyRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-//    // swiftlint:disable:next identifier_name
-//    func request(_ r: DepositAuthorizedRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-//    // swiftlint:disable:next identifier_name
-//    func request(_ r: FeeRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-//    // swiftlint:disable:next identifier_name
-//    func request(_ r: GatewayBalancesRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-//    // swiftlint:disable:next identifier_name
-//    func request(_ r: LedgerRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-//    // swiftlint:disable:next identifier_name
-//    func request(_ r: LedgerClosedRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-//    // swiftlint:disable:next identifier_name
-//    func request(_ r: LedgerCurrentRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-//    // swiftlint:disable:next identifier_name
-//    func request(_ r: LedgerDataRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-//    //    // swiftlint:disable:next identifier_name
-//    //    func request(_ r: LedgerEntryRequest) async -> EventLoopFuture<Any> {
-//    //        return await request(r: r)
-//    //    }
-//    //    // swiftlint:disable:next identifier_name
-//    //    func request(_ r: ManifestRequest) async -> EventLoopFuture<Any> {
-//    //        return await request(r: r)
-//    //    }
-//    //    // swiftlint:disable:next identifier_name
-//    func request(_ r: NFTBuyOffersRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-//    // swiftlint:disable:next identifier_name
-//    func request(_ r: NFTSellOffersRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-//    //    // swiftlint:disable:next identifier_name
-//    //    func request(_ r: NoRippleCheckRequest) async -> EventLoopFuture<Any> {
-//    //        return await request(r: r)
-//    //    }
-//    //    // swiftlint:disable:next identifier_name
-//    //    func request(_ r: PathFindRequest) async -> EventLoopFuture<Any> {
-//    //        return await request(r: r)
-//    //    }
-//    // swiftlint:disable:next identifier_name
-//    func request(_ r: PingRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-//    // swiftlint:disable:next identifier_name
-//    func request(_ r: RandomRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-//    // swiftlint:disable:next identifier_name
-//    func request(_ r: RipplePathFindRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-//    // swiftlint:disable:next identifier_name
-//    func request(_ r: ServerInfoRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-//    //    // swiftlint:disable:next identifier_name
-//    func request(_ r: ServerStateRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
+    func request(_ r: AccountInfoRequest) async throws -> AccountInfoResponse {
+        do {
+            let res: AccountInfoResponse = try await request<AccountInfoRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
+    // swiftlint:disable:next identifier_name
+    func request(_ r: AccountLinesRequest) async throws -> AccountLinesResponse {
+        do {
+            let res: AccountLinesResponse = try await request<AccountLinesRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
+    // swiftlint:disable:next identifier_name
+    func request(_ r: AccountNFTsRequest) async throws -> AccountNFTsResponse {
+        do {
+            let res: AccountNFTsResponse = try await request<AccountNFTsRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
+    // swiftlint:disable:next identifier_name
+    func request(_ r: AccountObjectsRequest) async throws -> AccountObjectsResponse {
+        do {
+            let res: AccountObjectsResponse = try await request<AccountObjectsRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
+    // swiftlint:disable:next identifier_name
+    func request(_ r: AccountOffersRequest) async throws -> AccountOffersResponse {
+        do {
+            let res: AccountOffersResponse = try await request<AccountOffersRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
+    // swiftlint:disable:next identifier_name
+    func request(_ r: AccountTxRequest) async throws -> AccountTxResponse {
+        do {
+            let res: AccountTxResponse = try await request<AccountTxRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
+    // swiftlint:disable:next identifier_name
+    func request(_ r: BookOffersRequest) async throws -> BookOffersResponse {
+        do {
+            let res: BookOffersResponse = try await request<BookOffersRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
+    // swiftlint:disable:next identifier_name
+    func request(_ r: ChannelVerifyRequest) async throws -> ChannelVerifyResponse {
+        do {
+            let res: ChannelVerifyResponse = try await request<ChannelVerifyRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
+    // swiftlint:disable:next identifier_name
+    func request(_ r: DepositAuthorizedRequest) async throws -> DepositAuthorizedResponse {
+        do {
+            let res: DepositAuthorizedResponse = try await request<DepositAuthorizedRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
+    // swiftlint:disable:next identifier_name
+    func request(_ r: FeeRequest) async throws -> FeeResponse {
+        do {
+            let res: FeeResponse = try await request<FeeRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
+    // swiftlint:disable:next identifier_name
+    func request(_ r: GatewayBalancesRequest) async throws -> GatewayBalancesResponse {
+        do {
+            let res: GatewayBalancesResponse = try await request<GatewayBalancesRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    // swiftlint:disable:next identifier_name
+    func request(_ r: LedgerRequest) async throws -> LedgerResponse {
+        do {
+            let res: LedgerResponse = try await request<LedgerRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
+    // swiftlint:disable:next identifier_name
+    func request(_ r: LedgerClosedRequest) async throws -> LedgerClosedResponse {
+        do {
+            let res: LedgerClosedResponse = try await request<LedgerClosedRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
+    // swiftlint:disable:next identifier_name
+    func request(_ r: LedgerCurrentRequest) async throws -> LedgerCurrentResponse {
+        do {
+            let res: LedgerCurrentResponse = try await request<LedgerCurrentRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
+    // swiftlint:disable:next identifier_name
+    func request(_ r: LedgerDataRequest) async throws -> LedgerDataResponse {
+        do {
+            let res: LedgerDataResponse = try await request<LedgerDataRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
+    //    // swiftlint:disable:next identifier_name
+    //    func request(_ r: LedgerEntryRequest) async -> EventLoopFuture<Any> {
+    //        return await request(r: r)
+    //    }
+    
+    // swiftlint:disable:next identifier_name
+    func request(_ r: ManifestRequest) async throws  -> ManifestResponse {
+        do {
+            let res: ManifestResponse = try await request<ManifestRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
+    // swiftlint:disable:next identifier_name
+    func request(_ r: NFTBuyOffersRequest) async throws -> NFTBuyOffersResponse {
+        do {
+            let res: NFTBuyOffersResponse = try await request<NFTBuyOffersRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
+    // swiftlint:disable:next identifier_name
+    func request(_ r: NFTSellOffersRequest) async throws -> NFTSellOffersResponse {
+        do {
+            let res: NFTSellOffersResponse = try await request<NFTSellOffersRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
+    // swiftlint:disable:next identifier_name
+    func request(_ r: NoRippleCheckRequest) async throws -> NoRippleCheckResponse {
+        do {
+            let res: NoRippleCheckResponse = try await request<NoRippleCheckRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
+    //    // swiftlint:disable:next identifier_name
+    //    func request(_ r: PathFindRequest) async -> EventLoopFuture<Any> {
+    //        return await request(r: r)
+    //    }
+    
+    // swiftlint:disable:next identifier_name
+    func request(_ r: PingRequest) async throws -> PingResponse {
+        do {
+            let res: PingResponse = try await request<PingRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
+    // swiftlint:disable:next identifier_name
+    func request(_ r: RandomRequest) async throws -> RandomResponse {
+        do {
+            let res: RandomResponse = try await request<RandomRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
+    // swiftlint:disable:next identifier_name
+    func request(_ r: RipplePathFindRequest) async throws -> RipplePathFindResponse {
+        do {
+            let res: RipplePathFindResponse = try await request<RipplePathFindRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
+    // swiftlint:disable:next identifier_name
+    func request(_ r: ServerInfoRequest) async throws -> ServerInfoResponse {
+        do {
+            let res: ServerInfoResponse = try await request<ServerInfoRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
+    // swiftlint:disable:next identifier_name
+    func request(_ r: ServerStateRequest) async throws -> ServerStateResponse {
+        do {
+            let res: ServerStateResponse = try await request<ServerStateRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
+    
 //    // swiftlint:disable:next identifier_name
 //    func request(_ r: SubmitRequest) async -> EventLoopFuture<Any> {
 //        return await request(r: r)
@@ -261,10 +413,16 @@ public class XrplClient {
 //    //    func request(_ r: UnsubscribeRequest) async -> EventLoopFuture<Any> {
 //    //        return await request(r: r)
 //    //    }
-//    // swiftlint:disable:next identifier_name
-//    func request(_ r: TransactionEntryRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
+    
+    // swiftlint:disable:next identifier_name
+    func request(_ r: TransactionEntryRequest) async throws -> TransactionEntryResponse {
+        do {
+            let res: TransactionEntryResponse = try await request<TransactionEntryRequest>(rdict: r)
+            return res
+        } catch let err{
+            throw err
+        }
+    }
 //    // swiftlint:disable:next identifier_name
 //    func request(_ r: TxRequest) async -> EventLoopFuture<Any> {
 //        return await request(r: r)

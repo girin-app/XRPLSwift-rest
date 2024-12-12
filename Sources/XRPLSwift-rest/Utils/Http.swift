@@ -20,7 +20,7 @@ open class BaseResponse<T: Codable>: Codable {
     }
 }
 
-open class ErrorResponse: Codable {
+open class ErrorResponse: Codable, Error {
     public var status: String = "error"
     public var error: String
     public var errorCode: Int?
