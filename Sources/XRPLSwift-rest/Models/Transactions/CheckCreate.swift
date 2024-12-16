@@ -123,7 +123,7 @@ public func validateCheckCreate(tx: [String: AnyObject]) throws {
         throw ValidationError("CheckCreate: missing field Destination")
     }
 
-    if !(tx["SendMax"] is String) && !isIssuedCurrency(input: tx["SendMax"] as? [String: AnyObject]) {
+    if !(tx["SendMax"] is String) && !isIssuedCurrency(input: tx["SendMax"] as Any) {
         throw ValidationError("CheckCreate: invalid SendMax")
     }
 

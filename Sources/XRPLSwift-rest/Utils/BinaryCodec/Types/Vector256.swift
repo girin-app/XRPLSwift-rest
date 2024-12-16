@@ -41,8 +41,8 @@ class Vector256: SerializedType {
         var byteList: [UInt8] = []
         let numBytes = hint != nil ? hint : parser.bytes.count
         let numHashes = Int(numBytes! / HASH_LENGTH_BYTES)
-        for i in 0..<numHashes {
-            byteList.append(contentsOf: try Hash256().fromParser(parser).bytes)
+        for _ in 0..<numHashes {
+            byteList.append(contentsOf: Hash256().fromParser(parser).bytes)
         }
         return Vector256(byteList)
     }

@@ -243,13 +243,12 @@ public class Wallet {
      - returns:
      A Wallet derived from a mnemonic.
      */
-    private static func fromRFC1751Mnemonic(
+    public static func fromRFC1751Mnemonic(
         _ mnemonic: String,
         _ opts: MnemonicOptions
     ) throws -> Wallet {
-        fatalError("NOT IMPLEMENTED")
-        let seed: [UInt8] = []
-        let encodedSeed = try XrplCodec.encodeSeed(seed, opts.algorithm)
+        let seed = try Bip39Mnemonic.createSeed(mnemonic: mnemonic)
+        let encodedSeed = try XrplCodec.encodeSeed(seed.bytes, opts.algorithm)
 
         return Wallet.fromSeed(encodedSeed, opts.address!)
     }
@@ -459,13 +458,6 @@ public class Wallet {
                     }
                 }
             }
-        }
-
-        if !(decoded == txCopy) {
-            let data = [
-                "decoded": decoded,
-                "tx": txCopy
-            ] as [String: AnyObject]
         }
     }
 }

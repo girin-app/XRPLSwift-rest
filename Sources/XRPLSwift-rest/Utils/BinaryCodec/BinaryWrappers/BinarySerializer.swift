@@ -51,7 +51,7 @@ public class BytesList {
      - list: The BytesList to write to
      */
     public func toBytesSink(_ list: BytesList) {
-        list.put(toBytes())
+        _ = list.put(toBytes())
     }
     /**
      Put bytes in the BytesList
