@@ -21,6 +21,7 @@ let package = Package(
         .package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", .upToNextMajor(from: "1.8.3")),
         .package(url: "https://github.com/attaswift/BigInt.git", .upToNextMajor(from: "5.5.1")),
         .package(url: "https://github.com/Boilertalk/secp256k1.swift.git", .upToNextMajor(from: "0.1.7")),
+        .package(url: "https://github.com/apple/swift-nio.git", .upToNextMajor(from: "2.76.1"))
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -29,9 +30,10 @@ let package = Package(
             name: "XRPLSwift-rest",
             dependencies: [
                 .product(name: "secp256k1", package: "secp256k1.swift"),
+                .product(name: "NIO", package: "swift-nio"),
                 "AnyCodable",
                 "CryptoSwift",
-                "BigInt",
+                "BigInt"
             ]
         ),
         .testTarget(

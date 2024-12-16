@@ -98,4 +98,12 @@ struct Bip39Mnemonics {
         
         #expect(wallet.classicAddress == expectedAddress)
     }
+    
+    @Test func testSign() async throws {
+        let wallet = Wallet.fromSeed("sEdV6bhEV489Abx3EamsUdk8chZA34i")
+        let paymentTx = Payment(amount: Amount.string("10"), destination: "r3UNMj8BuMmSmR5EYAseWq7RXcNCmzZTk2")
+        
+        var unsignedTx = try paymentTx.toJson()
+        _ = try! wallet.sign(unsignedTx)
+    }
 }

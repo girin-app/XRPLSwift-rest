@@ -295,50 +295,9 @@ public class XrplClient {
         return account
     }
 
-//    public func autofill(transaction: Transaction, signersCount: Int? = 0) async throws -> EventLoopFuture<[String: AnyObject]> {
-//        return try await AutoFillSugar().autofill(self, try transaction.toJson(), signersCount)
-//    }
-//
-//    public func submit(transaction: Transaction, opts: SubmitOptions?) async throws -> EventLoopFuture<Any> {
-//        return try await XRPLSwift.submit(
-//            self,
-//            transaction,
-//            opts?.autofill,
-//            opts?.failHard,
-//            opts?.wallet
-//        )
-//    }
-//
-//    public func submit(transaction: String, opts: SubmitOptions?) async throws -> EventLoopFuture<Any> {
-//        return try await XRPLSwift.submit(
-//            self,
-//            transaction,
-//            opts?.autofill,
-//            opts?.failHard,
-//            opts?.wallet
-//        )
-//    }
-//    //    /**
-//    //     * @category Core
-//    //     */
-//    //    public submitAndWait = submitAndWait
-//    //
-//    public func getXrpBalance(address: String) async throws -> String {
-//        return try await XRPLSwift.getXrpBalance(self, address)
-//    }
-//    //    /**
-//    //     * @category Abstraction
-//    //     */
-//    //    public getBalances = getBalances
-//    //
-//    //    /**
-//    //     * @category Abstraction
-//    //     */
-//    //    public getOrderbook = getOrderbook
-//    public func getLedgerIndex() async throws -> Int {
-//        return try await XRPLSwift.getLedgerIndex(self)
-//    }
-//    //    public fundWallet = fundWallet
+    public func getLedgerIndex() async throws -> Int {
+        return try await XRPLSwift_rest.getLedgerIndex(self)
+    }
 }
 
 extension String {
