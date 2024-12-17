@@ -243,33 +243,31 @@ public class XrplClient {
         return try await request(rdict: r)
     }
     
-//    // swiftlint:disable:next identifier_name
-//    func request(_ r: SubmitRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-//    // swiftlint:disable:next identifier_name
-//    func request(_ r: SubmitMultisignedRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-//    //    // swiftlint:disable:next identifier_name
-//    //    func request(_ r: SubscribeRequest) async -> EventLoopFuture<Any> {
-//    //        return await request(r: r)
-//    //    }
-//    //    // swiftlint:disable:next identifier_name
-//    //    func request(_ r: UnsubscribeRequest) async -> EventLoopFuture<Any> {
-//    //        return await request(r: r)
-//    //    }
+    func request(_ r: SubmitRequest) async throws -> SubmitResponse {
+        return try await request(rdict: r)
+    }
+    
+    func request(_ r: SubmitMultisignedRequest) async throws -> SubmitMultisignedResponse {
+        return try await request(rdict: r)
+    }
+    
+    //    // swiftlint:disable:next identifier_name
+    //    func request(_ r: SubscribeRequest) async -> EventLoopFuture<Any> {
+    //        return await request(r: r)
+    //    }
+    //    // swiftlint:disable:next identifier_name
+    //    func request(_ r: UnsubscribeRequest) async -> EventLoopFuture<Any> {
+    //        return await request(r: r)
+    //    }
     
     func request(_ r: TransactionEntryRequest) async throws -> TransactionEntryResponse {
         return try await request(rdict: r)
     }
     
-//    // swiftlint:disable:next identifier_name
-//    func request(_ r: TxRequest) async -> EventLoopFuture<Any> {
-//        return await request(r: r)
-//    }
-    // swiftlint:disable:next identifier_name
-
+    func request(_ r: TxRequest) async throws -> TxResponse {
+        return try await request(rdict: r)
+    }
+    
     public func request<T: Request, R: Codable>(rdict: T) async throws -> R {
         let req = BaseRequest<T>.init(method: T.getMethod(), params: [rdict])
         guard let data = try JSONSerialization.jsonObject(with: req.jsonData()) as? APIParams else {
@@ -281,6 +279,29 @@ public class XrplClient {
             url: URL.init(string: self.host)!,
             params: data
         )
+    }
+    
+    public func signAndSubmitTx(
+        _ wallet: Wallet,
+        _ tx: BaseTransaction,
+        _ fee: String,
+        autofill: Bool = true,
+        failHard: Bool = true
+    ) async throws -> (Bool, String) {
+        var unsignedTx = try tx.toJson()
+        unsignedTx["Account"] = wallet.classicAddress as AnyObject
+
+        if autofill {
+            unsignedTx = try await AutoFillSugar().autofill(self, unsignedTx, nil).get()
+        }
+        
+        unsignedTx["Fee"] = fee as AnyObject
+        
+        let signedTx = try wallet.sign(unsignedTx)
+        let submitRequest = SubmitRequest(txBlob: signedTx.txBlob, failHard: failHard)
+        let res = try await request(submitRequest)
+        
+        return (res.queued, signedTx.hash)
     }
 
     /**
