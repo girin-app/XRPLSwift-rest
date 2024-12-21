@@ -65,9 +65,9 @@ class http {
         
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        if params != nil && ![.get, .delete].contains(httpMethod) {
+        if let params = params, ![.get, .delete].contains(httpMethod) {
             do {
-                request.httpBody = try JSONSerialization.data(withJSONObject: params as Any)
+                request.httpBody = try JSONSerialization.data(withJSONObject: params)
             } catch {
                 print("Error creating JSON data: \(error)")
             }
