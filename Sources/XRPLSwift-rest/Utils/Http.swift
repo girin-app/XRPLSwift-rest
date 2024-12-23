@@ -20,7 +20,7 @@ open class BaseResponse<T: Codable>: Codable {
     }
 }
 
-open class ErrorResponse: Codable {
+open class ErrorResponse: Codable, Error {
     public var status: String = "error"
     public var error: String
     public var errorCode: Int?
@@ -40,6 +40,7 @@ class http {
     enum APIError : Error, Equatable {
         case invalidURL
         case noData
+        case cannotParseRequest
         case httpResponseIsNil
         case ErrorResponse(code: Int?, msg: String?)
         case unknownError
