@@ -15,7 +15,7 @@ let package = Package(
             targets: ["XRPLSwift-rest"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Flight-School/AnyCodable.git", from: "0.6.7")
+        .package(url: "https://github.com/Flight-School/AnyCodable.git", .upToNextMajor(from: "0.6.7"))
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
