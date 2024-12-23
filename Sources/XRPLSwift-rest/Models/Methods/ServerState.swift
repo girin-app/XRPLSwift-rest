@@ -9,6 +9,25 @@
 
 import Foundation
 
+public class LastClosedState: Codable {
+    /**
+     The amount of time it took to reach a consensus on the most recently
+     validated ledger version, in seconds.
+     */
+    public var convergeTime: Decimal
+    /**
+     How many trusted validators the server considered (including itself,
+     if configured as a validator) in the consensus process for the most
+     recently validated ledger version.
+     */
+    public var proposers: Int
+
+    enum CodingKeys: String, CodingKey {
+        case convergeTime = "converge_time"
+        case proposers = "proposers"
+    }
+}
+
 /**
  The `server_state` command asks the server for various machine-readable
  information about the rippled server's current state. The response is almost
@@ -28,7 +47,7 @@ public class StateLedger: Codable {
      Base fee, in XRP. This may be represented in scientific notation.
      Such as 1e-05 for 0.00005.
      */
-    public var baseFee: Int
+    public var baseFee: Decimal
     public var closeTime: Int
     /// Unique hash for the ledger, as hexadecimal.
     public var hash: String
@@ -36,19 +55,19 @@ public class StateLedger: Codable {
      Minimum amount of XRP (not drops) necessary for every account to.
      Keep in reserve .
      */
-    public var reserveBase: Int
+    public var reserveBase: Decimal
     /**
      Amount of XRP (not drops) added to the account reserve for each
      object an account owns in the ledger.
      */
-    public var reserveInc: Int
+    public var reserveInc: Decimal
     /// The ledger index of the latest validated ledger.
     public var seq: Int
 
     enum CodingKeys: String, CodingKey {
         case age = "age"
         case baseFee = "base_fee"
-        case closeTime = "closed_time"
+        case closeTime = "close_time"
         case hash = "hash"
         case reserveBase = "reserve_base"
         case reserveInc = "reserve_inc"
@@ -95,7 +114,7 @@ public class StateLedger: Codable {
      the amount of time it took to reach a consensus and the number of
      trusted validators participating.
      */
-    public var lastClose: LastClosed
+    public var lastClose: LastClosedState
     /**
      (Admin only) Detailed information about the current load state of the
      server.
@@ -205,14 +224,14 @@ public class StateLedger: Codable {
 
     public required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        amendmentBlocked = try values.decode(Bool.self, forKey: .amendmentBlocked)
+        amendmentBlocked = try values.decodeIfPresent(Bool.self, forKey: .amendmentBlocked)
         buildVersion = try values.decode(String.self, forKey: .buildVersion)
-        closedLedger = try values.decode(StateLedger.self, forKey: .closedLedger)
+        closedLedger = try values.decodeIfPresent(StateLedger.self, forKey: .closedLedger)
         completeLedgers = try values.decode(String.self, forKey: .completeLedgers)
         ioLatencyMs = try values.decode(Int.self, forKey: .ioLatencyMs)
         jqTransOverflow = try values.decode(String.self, forKey: .jqTransOverflow)
-        lastClose = try values.decode(LastClosed.self, forKey: .lastClose)
-        load = try values.decode(StateLoad.self, forKey: .load)
+        lastClose = try values.decode(LastClosedState.self, forKey: .lastClose)
+        load = try values.decodeIfPresent(StateLoad.self, forKey: .load)
         loadBase = try values.decode(Int.self, forKey: .loadBase)
         loadFactor = try values.decode(Int.self, forKey: .loadFactor)
         loadFactorFeeEscalation = try values.decode(Int.self, forKey: .loadFactorFeeEscalation)
@@ -221,7 +240,7 @@ public class StateLedger: Codable {
         loadFactorServer = try values.decode(Int.self, forKey: .loadFactorServer)
         peers = try values.decode(Int.self, forKey: .peers)
         pubkeyNode = try values.decode(String.self, forKey: .pubkeyNode)
-        pubkeyValidator = try values.decode(String.self, forKey: .pubkeyValidator)
+        pubkeyValidator = try values.decodeIfPresent(String.self, forKey: .pubkeyValidator)
         serverState = try values.decode(String.self, forKey: .serverState)
         serverStateDurationUs = try values.decode(String.self, forKey: .serverStateDurationUs)
         stateAccounting = try values.decode([ServerState: StateAccounting].self, forKey: .stateAccounting)
@@ -229,7 +248,7 @@ public class StateLedger: Codable {
         uptime = try values.decode(Int.self, forKey: .uptime)
         validatedLedger = try values.decode(StateLedger.self, forKey: .validatedLedger)
         validationQuorum = try values.decode(Int.self, forKey: .validationQuorum)
-        validatorListExpires = try values.decode(String.self, forKey: .validatorListExpires)
+        validatorListExpires = try values.decodeIfPresent(String.self, forKey: .validatorListExpires)
     }
 
     func toJson() throws -> [String: AnyObject] {
@@ -243,7 +262,7 @@ public class StateLedger: Codable {
  Response expected from a {@link ServerStateRequest}.
  */
 public class ServerStateResponse: Codable {
-    public var state: ServerInfoWrapper
+    public var state: ServerStateWrapper
     public var status: String
     
     func toJson() throws -> [String: AnyObject] {

@@ -63,24 +63,23 @@ public class InfoLedger: Codable {
      Base fee, in XRP. This may be represented in scientific notation.
      Such as 1e-05 for 0.00005.
      */
-    public var baseFee: Double
+    public var baseFee: Decimal
     /// Unique hash for the ledger, as hexadecimal.
     public var hash: String
     /**
      Minimum amount of XRP (not drops) necessary for every account to.
      Keep in reserve .
      */
-    public var reserveBase: Double
+    public var reserveBase: Decimal
     /**
      Amount of XRP (not drops) added to the account reserve for each
      object an account owns in the ledger.
      */
-    public var reserveInc: Double
+    public var reserveInc: Decimal
     /// The ledger index of the latest validated ledger.
     public var seq: Int
 
     enum CodingKeys: String, CodingKey {
-//        case age = "age"
         case baseFee = "base_fee_xrp"
         case hash = "hash"
         case reserveBase = "reserve_base_xrp"
@@ -104,12 +103,12 @@ public class StateLoad: Codable {
     }
 }
 
-public class LastClosed: Codable {
+public class LastClosedInfo: Codable {
     /**
      The amount of time it took to reach a consensus on the most recently
      validated ledger version, in seconds.
      */
-    public var convergeTime: Double
+    public var convergeTime: Decimal
     /**
      How many trusted validators the server considered (including itself,
      if configured as a validator) in the consensus process for the most
@@ -168,7 +167,7 @@ public class ServerInfoWrapper: Codable {
      the amount of time it took to reach a consensus and the number of
      trusted validators participating.
      */
-    public var lastClose: LastClosed?
+    public var lastClose: LastClosedInfo?
     /**
      (Admin only) Detailed information about the current load state of the
      server.
@@ -302,7 +301,7 @@ public class ServerInfoWrapper: Codable {
         hostid = try values.decodeIfPresent(String.self, forKey: .hostid)
         ioLatencyMs = try values.decodeIfPresent(Int.self, forKey: .ioLatencyMs)
         jqTransOverflow = try values.decodeIfPresent(String.self, forKey: .jqTransOverflow)
-        lastClose = try values.decodeIfPresent(LastClosed.self, forKey: .lastClose)
+        lastClose = try values.decodeIfPresent(LastClosedInfo.self, forKey: .lastClose)
         load = try values.decodeIfPresent(StateLoad.self, forKey: .load)
         loadFactor = try values.decodeIfPresent(Int.self, forKey: .loadFactor)
         loadFactorLocal = try values.decodeIfPresent(Int.self, forKey: .loadFactorLocal)
