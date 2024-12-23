@@ -18,9 +18,9 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/Flight-School/AnyCodable.git", .upToNextMajor(from: "0.6.7")),
-        .package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", from: "1.8.3"),
-        .package(url: "https://github.com/attaswift/BigInt.git", from: "5.5.1"),
-        .package(url: "https://github.com/Boilertalk/secp256k1.swift.git", from: "0.1.7"),
+        .package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", .upToNextMajor(from: "1.8.3")),
+        .package(url: "https://github.com/attaswift/BigInt.git", .upToNextMajor(from: "5.5.1")),
+        .package(url: "https://github.com/Boilertalk/secp256k1.swift.git", .upToNextMajor(from: "0.1.7")),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
