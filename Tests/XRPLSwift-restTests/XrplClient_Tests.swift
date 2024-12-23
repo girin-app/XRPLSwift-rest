@@ -243,6 +243,17 @@ struct XrplClientTests {
         #expect(response.status == "success")
     }
     
+    // tested with a valid account
+    //@Test func xrplClient_SubmitRequest() async throws {
+    //    let client = try XrplClient(host: "https://s.devnet.rippletest.net:51234/")
+    //    let wallet = Wallet.fromSeed("sEdV6bhEV489Abx3EamsUdk8chZA34i")
+    //
+    //    let paymentTx = Payment(amount: Amount.string("10"), destination: "r3UNMj8BuMmSmR5EYAseWq7RXcNCmzZTk2")
+    //    let (hash, isQueued) = try await client.signAndSubmitTx(wallet, paymentTx, "10")
+    //
+    //    #expect(hash != nil)
+    //}
+    
     @Test func xrplClient_TransactionEntryResponse() async throws {
         let client = try XrplClient(host: "https://s.devnet.rippletest.net:51234/")
         let param = TransactionEntryRequest(txHash: "022FE6D18BFD92E6AC3260A051A2316F4EEAFCABD7315B6323DB273ACE3B8725", ledgerIndex: LedgerIndex.number(6591387))

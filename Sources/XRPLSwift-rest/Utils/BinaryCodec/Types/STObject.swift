@@ -352,7 +352,7 @@ class STObject: SerializedType {
             if field.name == OBJECT_END_MARKER {
                 break
             }
-            let jsonValue: Any = try! parser.readFieldValue(field)!.toJson()
+            let jsonValue: Any = (try! parser.readFieldValue(field)!).toJson()
             accumulator[field.name] = enumToStr(field: field.name, value: jsonValue) as AnyObject
         }
         return accumulator

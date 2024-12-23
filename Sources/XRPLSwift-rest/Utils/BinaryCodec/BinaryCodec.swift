@@ -9,14 +9,6 @@
 
 import Foundation
 
-public enum BinaryCodecErrors: Error {
-    case invalidAddress
-    case valueError
-    case unsupportedAddress
-    case checksumFails
-    case unknownError(_ error: String)
-}
-
 func numToBytes(num: Int) -> Data {
     return Data(bytes: Int(num).asBigByteArray.reversed(), count: 4)
 }
@@ -79,13 +71,13 @@ class BinaryCodec {
      - returns:
      The binary-encoded claim, ready to be signed.
      */
-//    class func encodeForSigningClaim(_ claim: ChannelClaim) throws -> String {
-//        let prefix: Data = PAYMENT_CHANNEL_CLAIM_PREFIX
-//        let channel: Hash = try Hash256.from(claim.channel)
-//        let amount: xUInt64 = try xUInt64.from(Int(claim.amount)!)
-//        let buffer: Data = prefix + channel.bytes + amount.bytes
-//        return buffer.toHex
-//    }
+    class func encodeForSigningClaim(_ claim: ChannelClaim) throws -> String {
+        let prefix: Data = PAYMENT_CHANNEL_CLAIM_PREFIX
+        let channel: Hash = try Hash256.from(claim.channel)
+        let amount: xUInt64 = try xUInt64.from(Int(claim.amount)!)
+        let buffer: Data = prefix + channel.bytes + amount.bytes
+        return buffer.toHex
+    }
 
     /**
      Encode a transaction into binary format in preparation for providing one

@@ -88,7 +88,7 @@ class http {
                     let errDetail = errResponse.result
                     throw APIError.ErrorResponse(
                         code: errDetail.errorCode,
-                        msg: errDetail.errorMessage
+                        msg: String(decoding: data, as: UTF8.self)
                     )
                 }
                 

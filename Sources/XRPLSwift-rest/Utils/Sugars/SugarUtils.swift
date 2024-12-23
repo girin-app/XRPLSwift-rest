@@ -37,3 +37,12 @@ public func ensureClassicAddress(_ account: String) throws -> String {
     }
     return account
 }
+
+public func getLedgerIndex(_ client: XrplClient) async throws -> Int {
+    let dict: [String: AnyObject] = [
+        "command": "ledger",
+        "ledger_index": "validated"
+    ] as [String: AnyObject]
+    let ledgerResponse = try await client.request(LedgerRequest(dict))
+    return ledgerResponse.ledgerIndex
+}

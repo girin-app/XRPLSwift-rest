@@ -17,7 +17,7 @@ class xUInt: SerializedType {
 
     var value: Int {
         let data = Data(self.bytes.reversed())
-        let value = Int(bigEndian: data.withUnsafeBytes { $0.load(as: Int.self)})
+        let value = Int(bigEndian: data.withUnsafeBytes { $0.pointee })
         return value.bigEndian
     }
 
@@ -28,7 +28,7 @@ class xUInt: SerializedType {
      The JSON representation of the UInt object.
      */
     override func toJson() -> Any {
-        return self.value
+        return Int(self.value)
     }
 }
 
