@@ -70,21 +70,21 @@ public class InfoLedger: Codable {
      Minimum amount of XRP (not drops) necessary for every account to.
      Keep in reserve .
      */
-    public var reserveBase: Int
+    public var reserveBase: Double
     /**
      Amount of XRP (not drops) added to the account reserve for each
      object an account owns in the ledger.
      */
-    public var reserveInc: Int
+    public var reserveInc: Double
     /// The ledger index of the latest validated ledger.
     public var seq: Int
 
     enum CodingKeys: String, CodingKey {
 //        case age = "age"
-        case baseFee = "base_fee"
+        case baseFee = "base_fee_xrp"
         case hash = "hash"
-        case reserveBase = "reserve_base"
-        case reserveInc = "reserve_inc"
+        case reserveBase = "reserve_base_xrp"
+        case reserveInc = "reserve_inc_xrp"
         case seq = "seq"
     }
 }
@@ -118,7 +118,7 @@ public class LastClosed: Codable {
     public var proposers: Int
 
     enum CodingKeys: String, CodingKey {
-        case convergeTime = "converge_time"
+        case convergeTime = "converge_time_s"
         case proposers = "proposers"
     }
 }
