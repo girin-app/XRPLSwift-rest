@@ -10,6 +10,10 @@
 import AnyCodable
 import Foundation
 
+public enum TrustlineError: Error {
+    case invalidBalanceInTrustline
+}
+
 public class Trustline: Codable {
     /// The unique Address of the counterparty to this trust line.
     public var account: String
@@ -87,6 +91,74 @@ public class Trustline: Codable {
         case peerAuthorized = "peer_authorized"
         case freeze = "freeze"
         case freezePeer = "freeze_peer"
+    }
+    
+    public func toDto() throws -> TrustlineDto {
+        guard let balance = Decimal(string: self.balance) else {
+            throw TrustlineError.invalidBalanceInTrustline
+        }
+        
+        return TrustlineDto(
+            account: self.account,
+            balance: balance,
+            currency: self.currency,
+            limit: self.limit,
+            limitPeer: self.limitPeer,
+            qualityIn: self.qualityIn,
+            qualityOut: self.qualityOut,
+            noRipple: self.noRipple,
+            noRipplePeer: self.noRipplePeer,
+            authorized: self.authorized,
+            peerAuthorized: self.peerAuthorized,
+            freeze: self.freeze,
+            freezePeer: self.freezePeer
+        )
+    }
+}
+
+public class TrustlineDto: Codable {
+    public var account: String
+    public var balance: Decimal
+    public var currency: String
+    public var limit: String
+    public var limitPeer: String
+    public var qualityIn: Int
+    public var qualityOut: Int
+    public var noRipple: Bool?
+    public var noRipplePeer: Bool?
+    public var authorized: Bool?
+    public var peerAuthorized: Bool?
+    public var freeze: Bool?
+    public var freezePeer: Bool?
+    
+    public init(
+        account: String,
+        balance: Decimal,
+        currency: String,
+        limit: String,
+        limitPeer: String,
+        qualityIn: Int,
+        qualityOut: Int,
+        noRipple: Bool? = nil,
+        noRipplePeer: Bool? = nil,
+        authorized: Bool? = nil,
+        peerAuthorized: Bool? = nil,
+        freeze: Bool? = nil,
+        freezePeer: Bool? = nil
+    ) {
+        self.account = account
+        self.balance = balance
+        self.currency = currency
+        self.limit = limit
+        self.limitPeer = limitPeer
+        self.qualityIn = qualityIn
+        self.qualityOut = qualityOut
+        self.noRipple = noRipple
+        self.noRipplePeer = noRipplePeer
+        self.authorized = authorized
+        self.peerAuthorized = peerAuthorized
+        self.freeze = freeze
+        self.freezePeer = freezePeer
     }
 }
 
