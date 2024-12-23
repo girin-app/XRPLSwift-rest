@@ -103,7 +103,7 @@ struct Bip39Mnemonics {
         let wallet = Wallet.fromSeed("sEdV6bhEV489Abx3EamsUdk8chZA34i")
         let paymentTx = Payment(amount: Amount.string("10"), destination: "r3UNMj8BuMmSmR5EYAseWq7RXcNCmzZTk2")
         
-        var unsignedTx = try paymentTx.toJson()
-        _ = try! wallet.sign(unsignedTx)
+        let signedTx = try wallet.sign(try paymentTx.toJson())
+        #expect(signedTx.hash == "664C823AF382710FBB66567D26527CDBB9EF0CE1D20A7594A46447BB4BF136FD")
     }
 }
