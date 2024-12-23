@@ -52,7 +52,7 @@ class http {
         case delete = "DELETE"
     }
 
-    static func request<T: Codable>(httpMethod : HttpMethod, url: URL, params: APIParams? = nil) async throws -> T? {
+    static func request<T: Codable>(httpMethod : HttpMethod, url: URL, params: APIParams? = nil) async throws -> T {
         let components = URLComponents(url: url, resolvingAgainstBaseURL: true)
         
         guard let finalURL = components?.url else {
@@ -81,8 +81,7 @@ class http {
         
         if httpResponse.statusCode == 200 {
             do {
-                let res = try JSONDecoder().decode(BaseResponse<T>.self, from: data)
-                return res.result
+                return try JSONDecoder().decode(BaseResponse<T>.self, from: data).result
             } catch let error {
                 if let errResponse = try? JSONDecoder().decode(BaseResponse<ErrorResponse>.self, from: data) {
                     let errDetail = errResponse.result
